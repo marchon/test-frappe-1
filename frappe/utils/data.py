@@ -520,7 +520,19 @@ def comma_or(some_list):
 
 def comma_and(some_list):
 	return comma_sep(some_list, frappe._("{0} and {1}"))
-
+def new_line_sep(some_list):
+	if isinstance(some_list, (list, tuple)):
+		# list(some_list) is done to preserve the existing list
+		some_list = [unicode(s) for s in list(some_list)]
+		if not some_list:
+			return ""
+		elif len(some_list) == 1:
+			return some_list[0]
+		else:
+			some_list = ["%s" % s for s in some_list]
+			return format("\n ".join(some_list))
+	else:
+		return some_list
 def comma_sep(some_list, pattern):
 	if isinstance(some_list, (list, tuple)):
 		# list(some_list) is done to preserve the existing list
